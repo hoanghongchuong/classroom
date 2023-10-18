@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Repositories\Attendance\AttendanceRepositoryInterface;
 use App\Repositories\Schedule\ScheduleRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -23,8 +24,8 @@ class AttendanceController extends Controller
 
     public function report(Request $request) {
         $classId = $request->get('class_id');
-        $startDate = $request->get('start_date');
-        $endDate = $request->get('end_date');
+        $startDate = Carbon::parse($request->get('start_date'))->format('Y-m-d');
+        $endDate = Carbon::parse($request->get('end_date'))->format('Y-m-d');
         $data = $this->attendanceRepository->report($classId, $startDate, $endDate);
         $students = [];
 

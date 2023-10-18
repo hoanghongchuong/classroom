@@ -25,7 +25,7 @@ class StudentController extends Controller
     public function show($id)
     {
         $student = $this->studentRepository->getStudentById($id);
-        $student = collect($student);
+//        $student = collect($student);
         $student['birthday'] = Carbon::parse($student['birthday'])->format('d-m-Y');
         $student['date_checkin'] = Carbon::parse($student['date_checkin'])->format('d-m-Y');
         $student['date_checkout'] = Carbon::parse($student['date_checkout'])->format('d-m-Y');
@@ -38,13 +38,17 @@ class StudentController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request) {
-        $attributes = $request->only(['class_id', 'name', 'parent_name', 'birthday', 'phone', 'address','date_checkin', 'gender', 'date_checkout']);
+        $attributes = $request->only(['class_id', 'name', 'parent_name', 'birthday', 'phone', 'address','date_checkin', 'gender', 'date_checkout', 'note']);
+        $attributes['birthday'] = Carbon::parse($attributes['birthday'])->format('Y-m-d');
+        $attributes['date_checkin'] = Carbon::parse($attributes['date_checkin'])->format('Y-m-d');
         $data = $this->studentRepository->createStudent($attributes);
         return $this->successResponse(201, 'Create student success', $data, 201);
     }
 
     public function update(Request $request, $id) {
-        $attributes = $request->only(['class_id', 'name', 'parent_name', 'birthday', 'phone', 'address','date_checkin', 'gender', 'date_checkout', 'status']);
+        $attributes = $request->only(['class_id', 'name', 'parent_name', 'birthday', 'phone', 'address','date_checkin', 'gender', 'date_checkout', 'status', 'note']);
+        $attributes['birthday'] = Carbon::parse($attributes['birthday'])->format('Y-m-d');
+        $attributes['date_checkin'] = Carbon::parse($attributes['date_checkin'])->format('Y-m-d');
         $data = $this->studentRepository->updateStudent($attributes, $id);
         return $this->successResponse(200, 'Update student success', $data, 201);
     }
