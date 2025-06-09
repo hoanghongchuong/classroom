@@ -20,27 +20,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('admin/login', [AuthController::class, 'login'])->name('login');
-Route::post('register', [AuthController::class, 'register'])->name('register');
-
-
-
-Route::prefix('user')->middleware('auth:sanctum')->group(function() {
-    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
-});
-
-
-Route::prefix('schedule')->group(function() {
-    Route::get('/', [ScheduleController::class, 'index'])->name('schedule.index');
-    Route::post('create', [ScheduleController::class, 'create'])->name('schedule.create');
-    Route::get('/detail/{id}', [ScheduleController::class, 'show'])->name('schedule.show');
-    Route::put('edit/{id}', [ScheduleController::class, 'edit'])->name('schedule.edit');
-
-});
-
-Route::prefix('attendance')->group(function() {
-   Route::post('/', [AttendanceController::class, 'attendance']);
-});
+//Route::post('admin/login', [AuthController::class, 'login'])->name('login');
+//Route::post('register', [AuthController::class, 'register'])->name('register');
 
 Route::prefix('classes')->group(function() {
     Route::get('/', [ClassesController::class, 'index'])->name('classes.index');
